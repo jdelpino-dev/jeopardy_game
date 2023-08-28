@@ -78,6 +78,10 @@ body {
     max-width: 80vw;
   }
 
+  .category {
+    height: 14vw; /* Adjust for smaller screens */
+  }
+
   .question {
     font-size: 0.8rem;
     height: 14vw; /* Adjust for smaller screens */
@@ -112,6 +116,7 @@ body {
 
   .category {
     font-size: 0.6rem;
+    height: 15vw; /* Adjust for smaller screens */
   }
 
   .question {
@@ -128,6 +133,10 @@ body {
 }
 
 @media (max-width: 400px) {
+  .category {
+    height: 16vw; /* Adjust for smaller screens */
+  }
+
   .question {
     font-size: 0.44rem;
     font-weight: 700;
