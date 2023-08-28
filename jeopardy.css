@@ -1,5 +1,5 @@
 body {
-  font-family: "Helvetica Neue", "Helvetica", "Segoe UI", Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +12,11 @@ h1 {
   text-align: center;
   margin: 20px 0;
   color: #145385;
+}
+
+h1,
+.start-reset-btn {
+  font-family: "Nunito", "Segoe UI", Tahoma, sans-serif;
 }
 
 .game-board {
@@ -30,6 +35,7 @@ h1 {
 }
 
 .category {
+  font-family: "Nunito", "Segoe UI", Tahoma, sans-serif;
   background-color: #145385;
   color: #fff;
   text-align: center;
@@ -45,6 +51,8 @@ h1 {
 }
 
 .question {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 0.9rem;
   background-color: #2173a1;
   color: #fff;
   text-align: center;
@@ -113,7 +121,7 @@ h1 {
   }
 
   .question {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 
   .game-board .category h2,
@@ -135,7 +143,7 @@ h1 {
 
   .question {
     /* font-size: 0.8rem; */
-    font-size: 0.65rem;
+    font-size: 0.55rem;
     font-weight: 600;
     height: 15vw; /* Adjust for smaller screens */
   }
