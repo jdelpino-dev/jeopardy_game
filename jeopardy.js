@@ -18,7 +18,12 @@
 //    ...
 //  ]
 
+// Global variables
 let categories = [];
+
+// Dom elements
+const $gameButton = $("#game-button");
+const $gameBoard = $(".game-board");
 
 /** Get NUM_CATEGORIES random category from API.
  *
@@ -82,6 +87,32 @@ async function setupAndStart() {}
 
 // TODO
 
-function createJeopardyBoard() {
-  // for ()
+/** Create HTML board using divs and put it in the DOM. */
+function createJeopardyBoard(columns, rows) {
+  $gameBoard.hide().empty();
+
+  // create the header row and append it to the game board
+  $gameBoard.append($("<div>").addClass("category-row"));
+  // create the category rows and append them to the game board
+  for (let column = 1; column < columns + 1; column++) {
+    const $category = $("<div>").addClass("category");
+    $category.attr("id", `category-${column}`);
+    $gameBoard.append($category);
+  }
+
+  // create the questions/clue rows and append them to the game board
+  for (let row = 1; row < rows + 1; row++) {
+    // create the question row and append it to the game board
+    const $questionRow = $("<div>").addClass("question-row");
+    $questionRow.attr("id", `question-row-${row}`);
+    $gameBoard.append($questionRow);
+
+    // create the question/clue cells and append them to the question row
+    for (let column = 1; column < 7; column++) {
+      const $questionCell = $("<div>").addClass("question");
+      $questionCell.attr("id", `question-${column}-${row}`);
+      $questionRow.append($questionCell);
+    }
+  }
+  $gameBoard.show();
 }
