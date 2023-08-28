@@ -24,7 +24,6 @@ let categories = [];
  *
  * Returns array of category ids
  */
-
 function getCategoryIds() {}
 
 /** Return object with data about a category:
@@ -38,18 +37,16 @@ function getCategoryIds() {}
  *      ...
  *   ]
  */
-
 function getCategory(catId) {}
 
-/** Fill the HTML table#jeopardy with the categories & cells for questions.
+/** Fill the HTML jeopardy board with the categories & cells for questions.
  *
  * - The <thead> should be filled w/a <tr>, and a <td> for each category
  * - The <tbody> should be filled w/NUM_QUESTIONS_PER_CAT <tr>s,
  *   each with a question for each category in a <td>
  *   (initally, just show a "?" where the question/answer would go.)
  */
-
-async function fillTable() {}
+async function fillBoard() {}
 
 /** Handle clicking on a clue: show the question or answer.
  *
@@ -58,13 +55,11 @@ async function fillTable() {}
  * - if currently "question", show answer & set .showing to "answer"
  * - if currently "answer", ignore click
  * */
-
 function handleClick(evt) {}
 
 /** Wipe the current Jeopardy board, show the loading spinner,
  * and update the button used to fetch data.
  */
-
 function showLoadingView() {}
 
 /** Remove the loading spinner and update the button used to fetch data. */
@@ -75,9 +70,8 @@ function hideLoadingView() {}
  *
  * - get random category Ids
  * - get data for each category
- * - create HTML table
+ * - fill the board
  * */
-
 async function setupAndStart() {}
 
 /** On click of start / restart button, set up game. */
@@ -87,3 +81,7 @@ async function setupAndStart() {}
 /** On page load, add event handler for clicking clues */
 
 // TODO
+
+function createJeopardyBoard() {
+  // for ()
+}
