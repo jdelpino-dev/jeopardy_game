@@ -64,7 +64,8 @@ h1,
 }
 
 .question:hover {
-  background-color: #0c4b7e;
+  color: white;
+  background-color: goldenrod;
 }
 
 .game-board .category h2,
@@ -88,8 +89,8 @@ h1,
   margin: 20px 0;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  text-transform: uppercase; /* Make text uppercase for better visibility */
-  letter-spacing: 1px; /* Slight spacing between letters for legibility */
+  text-transform: uppercase;
+  letter-spacing: 1px;
   font-size: 1rem;
 }
 
