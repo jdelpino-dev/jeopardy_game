@@ -3,14 +3,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* height: 100vh; */
   min-height: 100vh;
   background-color: #f4f4f4;
   overflow-y: auto; /* allows vertical scrolling */
 }
 
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  color: #0066cc;
+}
+
 .game-board {
-  border: 1px solid #333;
+  background-color: gold;
+  border: 3px solid gold;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 2px;
@@ -28,8 +34,6 @@ body {
   color: #fff;
   text-align: center;
   font-weight: bold;
-  /* Ensuring square cells */
-  /* height: 100px; */
   height: 120px;
   display: flex;
   align-items: center;
@@ -45,8 +49,6 @@ body {
   color: #fff;
   text-align: center;
   font-weight: bold;
-  /* Ensuring square cells */
-  /* height: 100px; */
   height: 120px;
   display: flex;
   align-items: center;
@@ -59,8 +61,8 @@ body {
   background-color: #0077b5;
 }
 
-.jeopardy-board .category h2,
-.jeopardy-board .question span {
+.game-board .category h2,
+.game-board .question span {
   margin: 10px; /* Default margin for larger screens */
   display: block; /* Convert inline elements to block for applying margins */
 }
@@ -86,7 +88,7 @@ body {
 
 /* Adjustments for medium to medium big screens */
 @media (max-width: 960px) {
-  .jeopardy-board {
+  .game-board {
     max-width: 80vw;
   }
 
@@ -99,8 +101,8 @@ body {
     height: 14vw; /* Adjust for smaller screens */
   }
 
-  .jeopardy-board .category h2,
-  .jeopardy-board .question span {
+  .game-board .category h2,
+  .game-board .question span {
     margin: 8px; /* Slightly reduced margin */
   }
 }
@@ -111,18 +113,18 @@ body {
   }
 
   .question {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
 
-  .jeopardy-board .category h2,
-  .jeopardy-board .question span {
+  .game-board .category h2,
+  .game-board .question span {
     margin: 6px; /* Further reduced margin */
   }
 }
 
 /* Adjustments for small screens */
 @media (max-width: 600px) {
-  .jeopardy-board {
+  .game-board {
     max-width: 90vw;
   }
 
@@ -133,13 +135,13 @@ body {
 
   .question {
     /* font-size: 0.8rem; */
-    font-size: 0.5rem;
-    font-weight: normal;
+    font-size: 0.65rem;
+    font-weight: 600;
     height: 15vw; /* Adjust for smaller screens */
   }
 
-  .jeopardy-board .category h2,
-  .jeopardy-board .question span {
+  .game-board .category h2,
+  .game-board .question span {
     margin: 5px; /* Even smaller margin for small screens */
   }
 
@@ -155,13 +157,13 @@ body {
   }
 
   .question {
-    font-size: 0.4rem;
-    font-weight: 700;
+    font-size: 0.5rem;
+    font-weight: 500;
     height: 16vw; /* Adjust for very small screens */
   }
 
-  .jeopardy-board .category h2,
-  .jeopardy-board .question span {
+  .game-board .category h2,
+  .game-board .question span {
     margin: 3px; /* Minimal margin for very small screens */
   }
 

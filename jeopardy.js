@@ -22,8 +22,10 @@
 let categories = [];
 
 // Dom elements
-const $gameButton = $("#game-button");
+const $gameButton = $(".start-reset-btn");
 const $gameBoard = $(".game-board");
+const $gameCategories = $(".category");
+const $gameCells = $(".question");
 
 /** Get NUM_CATEGORIES random category from API.
  *
@@ -98,13 +100,18 @@ function createJeopardyBoard(columns, rows) {
       $questionRow.append($questionCell);
     }
   }
+
+  // show the game board in order to avoid a flash of the background color
+  $gameCategories.show();
+  $gameCells.show();
   $gameBoard.show();
 }
 
-/** Start game:
+/** Setup and Start game:
  *
  * - get random category Ids
  * - get data for each category
+ * - create the game board
  * - fill the board
  * */
 async function setupAndStart() {}
@@ -118,4 +125,6 @@ async function setupAndStart() {}
 // TODO
 
 // Setup and start the game when the DOM is ready
+$gameButton.on("click", setupAndStart);
+
 $(setupAndStart);
