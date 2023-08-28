@@ -1,17 +1,10 @@
-/* some colors you may find useful:
-  #115ff4
-  #060ce9
-  #28a200
-  #8d2ab5
-  #74119c
-*/
-
 body {
   font-family: "Helvetica Neue", "Helvetica", "Segoe UI", Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
+  min-height: 100vh;
   background-color: #f4f4f4;
   overflow-y: auto; /* allows vertical scrolling */
 }
@@ -72,6 +65,25 @@ body {
   display: block; /* Convert inline elements to block for applying margins */
 }
 
+.start-reset-btn {
+  background-color: #0066cc;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase; /* Make text uppercase for better visibility */
+  letter-spacing: 1px; /* Slight spacing between letters for legibility */
+  font-size: 1rem;
+}
+
+.start-reset-btn:hover {
+  background-color: #0055aa;
+}
+
 /* Adjustments for medium to medium big screens */
 @media (max-width: 960px) {
   .jeopardy-board {
@@ -130,6 +142,11 @@ body {
   .jeopardy-board .question span {
     margin: 5px; /* Even smaller margin for small screens */
   }
+
+  .start-reset-btn {
+    font-size: 0.8rem;
+    padding: 8px 16px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -146,5 +163,10 @@ body {
   .jeopardy-board .category h2,
   .jeopardy-board .question span {
     margin: 3px; /* Minimal margin for very small screens */
+  }
+
+  .start-reset-btn {
+    font-size: 0.7rem;
+    padding: 6px 14px;
   }
 }
