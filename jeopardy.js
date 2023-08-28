@@ -71,22 +71,6 @@ function showLoadingView() {}
 
 function hideLoadingView() {}
 
-/** Start game:
- *
- * - get random category Ids
- * - get data for each category
- * - fill the board
- * */
-async function setupAndStart() {}
-
-/** On click of start / restart button, set up game. */
-
-// TODO
-
-/** On page load, add event handler for clicking clues */
-
-// TODO
-
 /** Create HTML board using divs and put it in the DOM. */
 function createJeopardyBoard(columns, rows) {
   $gameBoard.hide().empty();
@@ -116,3 +100,19 @@ function createJeopardyBoard(columns, rows) {
   }
   $gameBoard.show();
 }
+
+/** Start game:
+ *
+ * - get random category Ids
+ * - get data for each category
+ * - fill the board
+ * */
+async function setupAndStart() {}
+
+/** On click of start / restart button, set up game. */
+
+// TODO
+
+/** On page load, add event handler for clicking clues */
+
+// TODO
