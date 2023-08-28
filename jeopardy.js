@@ -116,3 +116,6 @@ async function setupAndStart() {}
 /** On page load, add event handler for clicking clues */
 
 // TODO
+
+// Setup and start the game when the DOM is ready
+$(setupAndStart);
