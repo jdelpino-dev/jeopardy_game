@@ -4,19 +4,19 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #f4f4f4;
+  background-color: #faf8f2;
   overflow-y: auto; /* allows vertical scrolling */
 }
 
 h1 {
   text-align: center;
   margin: 20px 0;
-  color: #0066cc;
+  color: #145385;
 }
 
 .game-board {
-  background-color: gold;
-  border: 3px solid gold;
+  background-color: #e7d79c;
+  border: 3px solid #e7d79c;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 2px;
@@ -30,7 +30,7 @@ h1 {
 }
 
 .category {
-  background-color: #0066cc;
+  background-color: #145385;
   color: #fff;
   text-align: center;
   font-weight: bold;
@@ -45,7 +45,7 @@ h1 {
 }
 
 .question {
-  background-color: #0099ff;
+  background-color: #2173a1;
   color: #fff;
   text-align: center;
   font-weight: bold;
@@ -58,7 +58,7 @@ h1 {
 }
 
 .question:hover {
-  background-color: #0077b5;
+  background-color: #0c4b7e;
 }
 
 .game-board .category h2,
@@ -68,7 +68,7 @@ h1 {
 }
 
 .start-reset-btn {
-  background-color: #0066cc;
+  background-color: #145385;
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -83,7 +83,7 @@ h1 {
 }
 
 .start-reset-btn:hover {
-  background-color: #0055aa;
+  background-color: #0c4b7e;
 }
 
 /* Adjustments for medium to medium big screens */
