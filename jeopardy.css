@@ -45,11 +45,11 @@ h1,
   justify-content: center;
 }
 
-.question-row {
+.clue-row {
   display: contents;
 }
 
-.question {
+.card {
   font-family: "Open Sans", Arial, sans-serif;
   font-size: 0.9rem;
   background-color: #2173a1;
@@ -63,20 +63,24 @@ h1,
   transition: background-color 0.3s ease;
 }
 
-.question:hover {
+.card:hover {
   color: white;
   background-color: goldenrod;
 }
 
 .game-board .category h2,
-.game-board .question span {
+.game-board .card span {
   margin: 10px; /* Default margin for larger screens */
   display: block; /* Convert inline elements to block for applying margins */
 }
 
 .category,
-.question {
+.card {
   color: #bdb76b;
+}
+
+.hidden-clue span {
+  font-size: 2rem;
 }
 
 .start-reset-btn {
@@ -108,14 +112,18 @@ h1,
     height: 14vw; /* Adjust for smaller screens */
   }
 
-  .question {
+  .card {
     font-size: 0.8rem;
     height: 14vw; /* Adjust for smaller screens */
   }
 
   .game-board .category h2,
-  .game-board .question span {
+  .game-board .card span {
     margin: 8px; /* Slightly reduced margin */
+  }
+
+  .hidden-clue span {
+    font-size: 1.7rem;
   }
 }
 
@@ -124,13 +132,17 @@ h1,
     font-size: 0.7rem;
   }
 
-  .question {
+  .card {
     font-size: 0.6rem;
   }
 
   .game-board .category h2,
-  .game-board .question span {
+  .game-board .card span {
     margin: 6px; /* Further reduced margin */
+  }
+
+  .hidden-clue span {
+    font-size: 1.5rem;
   }
 }
 
@@ -145,7 +157,7 @@ h1,
     height: 15vw; /* Adjust for smaller screens */
   }
 
-  .question {
+  .card {
     /* font-size: 0.8rem; */
     font-size: 0.55rem;
     font-weight: 600;
@@ -153,13 +165,17 @@ h1,
   }
 
   .game-board .category h2,
-  .game-board .question span {
+  .game-board .card span {
     margin: 5px; /* Even smaller margin for small screens */
   }
 
   .start-reset-btn {
     font-size: 0.8rem;
     padding: 8px 16px;
+  }
+
+  .hidden-clue span {
+    font-size: 1.3rem;
   }
 }
 
@@ -168,19 +184,23 @@ h1,
     height: 16vw; /* Adjust for smaller screens */
   }
 
-  .question {
+  .card {
     font-size: 0.5rem;
     font-weight: 500;
     height: 16vw; /* Adjust for very small screens */
   }
 
   .game-board .category h2,
-  .game-board .question span {
+  .game-board .card span {
     margin: 3px; /* Minimal margin for very small screens */
   }
 
   .start-reset-btn {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     padding: 6px 14px;
+  }
+
+  .hidden-clue span {
+    font-size: 0.9rem;
   }
 }

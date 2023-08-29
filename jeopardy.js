@@ -89,14 +89,16 @@ function createJeopardyBoard(columns, rows) {
   // create the questions/clue rows and append them to the game board
   for (let row = 1; row < rows + 1; row++) {
     // create the question row and append it to the game board
-    const $questionRow = $("<div>").addClass("question-row");
-    $questionRow.attr("id", `question-row-${row}`);
+    const $questionRow = $("<div>").addClass("clue-row");
+    $questionRow.attr("id", `row-${row}`);
     $gameBoard.append($questionRow);
 
     // create the question/clue cells and append them to the question row
     for (let column = 1; column < 7; column++) {
-      const $questionCell = $("<div>").addClass("question");
-      $questionCell.attr("id", `question-${column}-${row}`);
+      const $questionCell = $("<div>").addClass("card hidden-clue");
+      $questionCell.attr("id", `card-${column}-row-${row}`);
+      // set the text of the question cell to a question mark
+      $questionCell.append("<span>?</span>");
       $questionRow.append($questionCell);
     }
   }
@@ -114,7 +116,10 @@ function createJeopardyBoard(columns, rows) {
  * - create the game board
  * - fill the board
  * */
-async function setupAndStart() {}
+async function setupAndStart() {
+  createJeopardyBoard(6, 5);
+  $gameButton.show();
+}
 
 /** On click of start / restart button, set up game. */
 
