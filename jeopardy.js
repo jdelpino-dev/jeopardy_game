@@ -6,35 +6,41 @@ const $gameCards = $(".question");
 
 // JeopardyObject class
 class JeopardyObject {
-  constructor(numCategories, numClues) {
+  constructor(numCategories, numClues, bufferSize) {
     this.numCategories = numCategories;
     this.numClues = numClues;
     this.content = [];
     this.categoryIds = [];
-    this.randomCluesBuffer = [];
-    this.nextRandomClueIndex = 0;
+    this.bufferSize = bufferSize;
+    this.randomCategoriesBuffer = [];
+    this.nextRandomCategoryIndex = 0;
   }
 
-  async requestRandomClues(count) {
-    console.log("requestRandomClues()");
+  async requestRandomCategories() {
+    console.log("requestRandomCategories()");
     const response = await axios.get(
-      `https://jservice.io/api/random?count=${count}`
+      `https://jservice.io/api/categories?count=${this.bufferSize}`
     );
-    this.randomCluesBuffer = response.data;
-    this.nextRandomClueIndex = 0;
+    this.randomCategoriesBuffer = _.shuffle(response.data);
+    this.nextRandomCategoryIndex = 0;
   }
 
   shouldRequestNewRandomClues() {
     console.log("shouldRequestNewRandomClues()");
-    return this.nextRandomClueIndex >= this.randomCluesBuffer.length;
+    return this.nextRandomCategoryIndex >= this.randomCategoriesBuffer.length;
   }
 
-  async requestCategory(categoryId) {
-    console.log("requestCategory()");
-    const response = await axios.get(
-      `https://jservice.io/api/category?id=${categoryId}`
-    );
-    return response.data;
+  getNextRandomCategory() {
+    console.log("getNextRandomCategory()");
+    const nextRandomCategory =
+      this.randomCategoriesBuffer[this.nextRandomCategoryIndex];
+    this.nextRandomCategoryIndex++;
+    return nextRandomCategory;
+  }
+
+  randomizedClues(clues) {
+    console.log("randomizedClues()");
+    return _.shuffle(clues);
   }
 
   async requestRandomCategoriesAndClues() {
@@ -46,7 +52,7 @@ class JeopardyObject {
         await this.requestRandomClues(100);
       }
       // get a random clue
-      const clue = this.randomCluesBuffer[this.nextRandomClueIndex];
+      const clue = this.randomCategoriesBuffer[this.nextRandomCategoryIndex];
       const categoryId = clue.category_id;
 
       // check if the category has already been added
@@ -65,7 +71,7 @@ class JeopardyObject {
         this.addClues(categoryOnBoard, categoryRandomClues);
 
         category_counter++;
-        this.nextRandomClueIndex++;
+        this.nextRandomCategoryIndex++;
       }
     }
   }
@@ -101,7 +107,7 @@ class JeopardyObject {
   resetContent() {
     this.content = [];
     this.categoryIds = [];
-    this.randomCluesBuffer = [];
+    this.randomCategoriesBuffer = [];
   }
 }
 
