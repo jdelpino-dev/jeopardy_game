@@ -4,13 +4,13 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #faf8f2;
+  background-color: #393d67;
   overflow-y: auto; /* allows vertical scrolling */
 }
 
 h1 {
   text-align: center;
-  margin: 20px 0;
+  margin: 5px 0;
   color: goldenrod;
 }
 
@@ -25,9 +25,9 @@ h1,
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 2px;
-  max-width: 960px; /* Cap width of the board */
+  max-width: 990px; /* Cap width of the board */
   width: 80%;
-  margin: 10px auto; /* Center the board */
+  margin: 2px auto; /* Center the board */
 }
 
 .category-row {
@@ -36,13 +36,15 @@ h1,
 
 .category {
   font-family: "Nunito", "Segoe UI", Tahoma, sans-serif;
+  font-size: 1rem;
   background-color: #145385;
   text-align: center;
   font-weight: bold;
-  height: 120px;
+  height: 85px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 4px;
 }
 
 .clue-row {
@@ -55,10 +57,12 @@ h1,
   background-color: #2173a1;
   text-align: center;
   font-weight: bold;
-  height: 120px;
+  min-height: 136px;
+  height: stretch;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 4px;
 }
 
 .card.inactive {
@@ -119,7 +123,7 @@ h1,
 }
 
 /* Adjustments for medium to medium big screens */
-@media (max-width: 960px) {
+@media (max-width: 990px) {
   .game-board {
     max-width: 80vw;
   }
@@ -130,7 +134,8 @@ h1,
 
   .card {
     font-size: 0.8rem;
-    height: 14vw; /* Adjust for smaller screens */
+    min-height: 14vw;
+    padding: 4px;
   }
 
   .game-board .category h2,
@@ -175,9 +180,10 @@ h1,
 
   .card {
     /* font-size: 0.8rem; */
-    font-size: 0.55rem;
-    font-weight: 600;
-    height: 15vw; /* Adjust for smaller screens */
+    font-size: 0.47rem;
+    font-weight: 700;
+    min-height: 15vw;
+    padding: 4px;
   }
 
   .game-board .category h2,
@@ -201,9 +207,10 @@ h1,
   }
 
   .card {
-    font-size: 0.5rem;
-    font-weight: 500;
-    height: 16vw; /* Adjust for very small screens */
+    font-size: 0.4rem;
+    font-weight: 700;
+    min-height: 16vw;
+    padding: 4px;
   }
 
   .game-board .category h2,
