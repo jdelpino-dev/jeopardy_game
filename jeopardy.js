@@ -134,13 +134,13 @@ function CardClickHandler(evt) {
 
   if ($card.hasClass("hidden-clue")) {
     $card.off("click");
-    $card.text(clue.question);
+    $card.html(clue.question);
     $card.removeClass("hidden-clue");
     $card.addClass("showing-clue");
     $card.on("click", CardClickHandler);
   } else if ($card.hasClass("showing-clue")) {
     $card.off("click");
-    $card.text(clue.answer);
+    $card.html(clue.answer);
     $card.removeClass("showing-clue");
     $card.addClass("showing-answer");
     $card.on("click", CardClickHandler);
@@ -218,7 +218,7 @@ function createJeopardyBoard(columns, rows) {
 
 function putCategoryTitleOnBoard(categoryObject, column) {
   const $categoryRow = $(`#category-${column}`);
-  $categoryRow.text(categoryObject.title);
+  $categoryRow.html(categoryObject.title.toUpperCase());
 }
 
 function putCategoriesOnBoard() {
