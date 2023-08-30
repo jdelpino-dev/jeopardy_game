@@ -11,7 +11,8 @@ class JeopardyObject {
     this.numClues = numClues;
     this.content = [];
     this.categoryIds = [];
-    this.randomClues = [];
+    this.randomCluesBuffer = [];
+    this.nextRandomClueIndex = 0;
   }
 
   async requestRandomClues(count) {
@@ -19,7 +20,13 @@ class JeopardyObject {
     const response = await axios.get(
       `https://jservice.io/api/random?count=${count}`
     );
-    this.randomClues = response.data;
+    this.randomCluesBuffer = response.data;
+    this.nextRandomClueIndex = 0;
+  }
+
+  shouldRequestNewRandomClues() {
+    console.log("shouldRequestNewRandomClues()");
+    return this.nextRandomClueIndex >= this.randomCluesBuffer.length;
   }
 
   async requestCategory(categoryId) {
@@ -32,12 +39,14 @@ class JeopardyObject {
 
   async requestRandomCategoriesAndClues() {
     console.log("requestRandomCategoriesAndClues()");
-    await this.requestRandomClues(this.numCategories * 10);
 
     let category_counter = 0;
     while (category_counter < this.numCategories) {
+      if (this.shouldRequestNewRandomClues()) {
+        await this.requestRandomClues(100);
+      }
       // get a random clue
-      const clue = this.randomClues[category_counter];
+      const clue = this.randomCluesBuffer[this.nextRandomClueIndex];
       const categoryId = clue.category_id;
 
       // check if the category has already been added
@@ -52,10 +61,11 @@ class JeopardyObject {
         // add the category to the jeopardy object
         const categoryOnBoard = this.addCategory(category);
         // get all the  category clues
-        const randomClues = _.sampleSize(category.clues, this.numClues);
-        this.addClues(categoryOnBoard, randomClues);
+        const categoryRandomClues = _.sampleSize(category.clues, this.numClues);
+        this.addClues(categoryOnBoard, categoryRandomClues);
 
         category_counter++;
+        this.nextRandomClueIndex++;
       }
     }
   }
@@ -91,7 +101,7 @@ class JeopardyObject {
   resetContent() {
     this.content = [];
     this.categoryIds = [];
-    this.randomClues = [];
+    this.randomCluesBuffer = [];
   }
 }
 
