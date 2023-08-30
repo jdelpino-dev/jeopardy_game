@@ -59,11 +59,27 @@ h1,
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.card:hover {
+.card.inactive {
+  background-color: #145385;
+  cursor: default;
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.card.active {
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.card.active:hover {
   color: white;
   background-color: goldenrod;
 }

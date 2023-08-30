@@ -1,68 +1,163 @@
-// categories is the main data structure for the app; it looks like this:
-
-//  [
-//    { title: "Math",
-//      clues: [
-//        {question: "2+2", answer: 4, showing: null},
-//        {question: "1+1", answer: 2, showing: null}
-//        ...
-//      ],
-//    },
-//    { title: "Literature",
-//      clues: [
-//        {question: "Hamlet Author", answer: "Shakespeare", showing: null},
-//        {question: "Bell Jar Author", answer: "Plath", showing: null},
-//        ...
-//      ],
-//    },
-//    ...
-//  ]
-
-// Global variables
-let categories = [];
-
-// Dom elements
-const $gameButton = $(".start-reset-btn");
+// DOM elements
+const $button = $(".start-reset-btn");
 const $gameBoard = $(".game-board");
 const $gameCategories = $(".category");
-const $gameCells = $(".question");
+const $gameCards = $(".question");
 
-/** Get NUM_CATEGORIES random category from API.
- *
- * Returns array of category ids
- */
-function getCategoryIds() {}
+// JeopardyObject class
+class JeopardyObject {
+  constructor(numCategories, numClues) {
+    this.numCategories = numCategories;
+    this.numClues = numClues;
+    this.content = [];
+    this.categoryIds = [];
+    this.randomClues = [];
+  }
 
-/** Return object with data about a category:
- *
- *  Returns { title: "Math", clues: clue-array }
- *
- * Where clue-array is:
- *   [
- *      {question: "Hamlet Author", answer: "Shakespeare", showing: null},
- *      {question: "Bell Jar Author", answer: "Plath", showing: null},
- *      ...
- *   ]
- */
-function getCategory(catId) {}
+  async requestRandomClues(count) {
+    console.log("requestRandomClues()");
+    const response = await axios.get(
+      `https://jservice.io/api/random?count=${count}`
+    );
+    this.randomClues = response.data;
+  }
 
-/** Fill the HTML jeopardy board with the categories & cells for questions.
- *
- * - The <thead> should be filled w/a <tr>, and a <td> for each category
- * - The <tbody> should be filled w/NUM_QUESTIONS_PER_CAT <tr>s,
- *   each with a question for each category in a <td>
- *   (initally, just show a "?" where the question/answer would go.)
- */
-async function fillBoard() {}
+  async requestCategory(categoryId) {
+    console.log("requestCategory()");
+    const response = await axios.get(
+      `https://jservice.io/api/category?id=${categoryId}`
+    );
+    return response.data;
+  }
+
+  async requestRandomCategoriesAndClues() {
+    console.log("requestRandomCategoriesAndClues()");
+    await this.requestRandomClues(this.numCategories * 10);
+
+    let category_counter = 0;
+    while (category_counter < this.numCategories) {
+      // get a random clue
+      const clue = this.randomClues[category_counter];
+      const categoryId = clue.category_id;
+
+      // check if the category has already been added
+      if (!this.categoryIds.includes(categoryId)) {
+        const category = await this.requestCategory(clue.category_id);
+
+        // if the category doesn't have enough clues then skip it
+        if (category.clues_count < this.numClues) {
+          continue;
+        }
+
+        // add the category to the jeopardy object
+        const categoryOnBoard = this.addCategory(category);
+        // get all the  category clues
+        const randomClues = _.sampleSize(category.clues, this.numClues);
+        this.addClues(categoryOnBoard, randomClues);
+
+        category_counter++;
+      }
+    }
+  }
+
+  addCategory(category) {
+    console.log("addCategory()");
+    this.categoryIds.push(category.id);
+
+    const categoryOnBoard = {
+      title: category.title,
+      clues: [],
+    };
+    this.content.push(categoryOnBoard);
+
+    return categoryOnBoard;
+  }
+
+  addClue(categoryObject, clue) {
+    console.log("addClue()");
+    categoryObject.clues.push(clue);
+  }
+
+  addClues(categoryObject, clues) {
+    console.log("addClues()");
+    categoryObject.clues.push(...clues);
+  }
+
+  getCategoryObject(categoryColumn) {
+    console.log("getCategoryObject()");
+    return this.content[categoryColumn];
+  }
+
+  resetContent() {
+    this.content = [];
+    this.categoryIds = [];
+    this.randomClues = [];
+  }
+}
+
+// Main data structure that contains the jeopardy game data
+const jeopardyObject = new JeopardyObject(6, 5);
 
 /** Handle clicking on a clue: show the question or answer.
  *
- * Uses .showing property on clue to determine what to show:
- * - if currently null, show question & set .showing to "question"
- * - if currently "question", show answer & set .showing to "answer"
- * - if currently "answer", ignore click
+ * Uses the classes .hidden-clue, .showing-clue, and .showing-answer
+ * to determine what to show:
+ * - if currently ,hidden-clue, then show clue & set class to .showing-clue
+ * - if currently .showing-clue, then show answer, set class to .showing-answer
+ *  and & set class to .inactive
+ * - if currently .showing-answer, do nothing
  * */
-function handleClick(evt) {}
+function CardClickHandler(evt) {
+  // get the card that was clicked on
+  // use closest to ensure $card always refers to the div, even
+  // if the span was clicked
+  const $card = $(evt.target).closest("div");
+
+  const column = +$card.attr("data-colum");
+  const row = +$card.attr("data-row");
+  const categoryObject = jeopardyObject.getCategoryObject(column - 1);
+  console.log("target=", evt.target);
+  console.log("categoryObject=", categoryObject);
+  console.log("row=", row);
+  console.log("clues=", categoryObject.clues);
+  const clue = categoryObject.clues[row - 1];
+
+  if ($card.hasClass("hidden-clue")) {
+    $card.off("click");
+    $card.text(clue.question);
+    $card.removeClass("hidden-clue");
+    $card.addClass("showing-clue");
+    $card.on("click", CardClickHandler);
+  } else if ($card.hasClass("showing-clue")) {
+    $card.off("click");
+    $card.text(clue.answer);
+    $card.removeClass("showing-clue");
+    $card.addClass("showing-answer");
+    $card.on("click", CardClickHandler);
+    $card.off("click");
+    $card.removeClass("active");
+    $card.addClass("inactive");
+  }
+}
+
+async function buttonClickHandler() {
+  console.log("buttonClickHandler()");
+
+  $button.off("click");
+  if ($button.attr("data-function") === "start") {
+    $button.text("Reset");
+    $button.attr("data-function", "reset");
+    await setupAndStart();
+    $button.on("click", buttonClickHandler);
+  } else {
+    $button.text("Start");
+    $button.attr("data-function", "start");
+    await resetGame();
+    $button.on("click", buttonClickHandler);
+  }
+}
+
+$button.on("click", buttonClickHandler);
 
 /** Wipe the current Jeopardy board, show the loading spinner,
  * and update the button used to fetch data.
@@ -95,8 +190,10 @@ function createJeopardyBoard(columns, rows) {
 
     // create the question/clue cells and append them to the question row
     for (let column = 1; column < 7; column++) {
-      const $questionCell = $("<div>").addClass("card hidden-clue");
+      const $questionCell = $("<div>").addClass("card inactive hidden-clue");
       $questionCell.attr("id", `card-${column}-row-${row}`);
+      $questionCell.attr("data-colum", `${column}`);
+      $questionCell.attr("data-row", `${row}`);
       // set the text of the question cell to a question mark
       $questionCell.append("<span>?</span>");
       $questionRow.append($questionCell);
@@ -105,8 +202,20 @@ function createJeopardyBoard(columns, rows) {
 
   // show the game board in order to avoid a flash of the background color
   $gameCategories.show();
-  $gameCells.show();
+  $gameCards.show();
   $gameBoard.show();
+}
+
+function putCategoryTitleOnBoard(categoryObject, column) {
+  const $categoryRow = $(`#category-${column}`);
+  $categoryRow.text(categoryObject.title);
+}
+
+function putCategoriesOnBoard() {
+  for (let column = 1; column < 7; column++) {
+    const categoryObject = jeopardyObject.getCategoryObject(column - 1);
+    putCategoryTitleOnBoard(categoryObject, column);
+  }
 }
 
 /** Setup and Start game:
@@ -117,19 +226,25 @@ function createJeopardyBoard(columns, rows) {
  * - fill the board
  * */
 async function setupAndStart() {
-  createJeopardyBoard(6, 5);
-  $gameButton.show();
+  console.log("setupAndStart()");
+
+  await jeopardyObject.requestRandomCategoriesAndClues();
+  putCategoriesOnBoard();
+  $(".card").addClass("active");
+  $(".card").on("click", CardClickHandler);
 }
 
-/** On click of start / restart button, set up game. */
+async function resetGame() {
+  $gameBoard.hide();
+  $gameBoard.empty();
+  jeopardyObject.resetContent();
+  loadGame();
+}
 
-// TODO
+function loadGame() {
+  createJeopardyBoard(6, 5);
+  $button.show();
+}
 
-/** On page load, add event handler for clicking clues */
-
-// TODO
-
-// Setup and start the game when the DOM is ready
-$gameButton.on("click", setupAndStart);
-
-$(setupAndStart);
+// Render the game board and show the start button
+$(loadGame);
