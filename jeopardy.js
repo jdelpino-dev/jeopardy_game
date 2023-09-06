@@ -15,7 +15,12 @@ class JeopardyObject {
     this.nextRandomClueIndex = 0;
   }
 
-  /* Request random clues from the jservice API and store them*/
+  /* Request random clues from the jservice API and store them as a buffer.
+   *
+   * The buffer is used to obtain unique random categories from random clues.
+   * This is a workaround to the jservice API not having a random
+   * category endpoint.
+   */
   async requestRandomClues(count) {
     console.log("requestRandomClues()");
     const response = await axios.get(
@@ -40,7 +45,14 @@ class JeopardyObject {
     return response.data;
   }
 
-  /* Request random categories and clues from the jservice API and store them */
+  /* Request random categories and clues from the jservice API
+   * and store them.
+   *
+   * It gets the random categories through a workaround of requesting
+   * random clues and then getting the category of each clue. It makes sure
+   * that the category is unique and has enough clues to populate the column.
+   *
+   */
   async requestRandomCategoriesAndClues() {
     console.log("requestRandomCategoriesAndClues()");
 
