@@ -15,6 +15,7 @@ class JeopardyObject {
     this.nextRandomClueIndex = 0;
   }
 
+  /* Request random clues from the jservice API and store them*/
   async requestRandomClues(count) {
     console.log("requestRandomClues()");
     const response = await axios.get(
@@ -24,11 +25,13 @@ class JeopardyObject {
     this.nextRandomClueIndex = 0;
   }
 
+  /* Check if the random clues buffer is empty and requires a new request */
   shouldRequestNewRandomClues() {
     console.log("shouldRequestNewRandomClues()");
     return this.nextRandomClueIndex >= this.randomCluesBuffer.length;
   }
 
+  /* Request a category from the jservice API and return it */
   async requestCategory(categoryId) {
     console.log("requestCategory()");
     const response = await axios.get(
@@ -37,11 +40,15 @@ class JeopardyObject {
     return response.data;
   }
 
+  /* Request random categories and clues from the jservice API and store them */
   async requestRandomCategoriesAndClues() {
     console.log("requestRandomCategoriesAndClues()");
 
+    // get random clues for each 6 categories
     let category_counter = 0;
     while (category_counter < this.numCategories) {
+      // check if the random clues buffer is empty
+      // and in that case make a new request
       if (this.shouldRequestNewRandomClues()) {
         await this.requestRandomClues(100);
       }
@@ -49,18 +56,19 @@ class JeopardyObject {
       const clue = this.randomCluesBuffer[this.nextRandomClueIndex];
       const categoryId = clue.category_id;
 
-      // check if the category has already been added
+      // check if the clue's category has already been added
       if (!this.categoryIds.includes(categoryId)) {
         const category = await this.requestCategory(clue.category_id);
 
-        // if the category doesn't have enough clues then skip it
+        // if the category doesn't have enough clues to populate the column
+        // then skip it
         if (category.clues_count < this.numClues) {
           continue;
         }
 
         // add the category to the jeopardy object
         const categoryOnBoard = this.addCategory(category);
-        // get all the  category clues
+        // get all the category clues to the column
         const categoryRandomClues = _.sampleSize(category.clues, this.numClues);
         this.addClues(categoryOnBoard, categoryRandomClues);
 
